@@ -1,0 +1,63 @@
+import java.util.Scanner;
+ 
+public class SwitchCase {
+	
+	public void createAccount() {
+		System.out.println("the account is created");
+		
+	}
+	public void login() {
+		System.out.println("the account is logged in");
+		
+	}
+	public  void transfer() {
+		System.out.println("the account transaction is done");
+		
+	}
+	public void  withdraw() {
+		System.out.println("the account withdrawal is done");
+		
+	}
+	public void checkBalance() {
+		System.out.println("the account balance is checked");
+		
+	}
+	
+	
+ 
+	public static void main(String[] args) {
+	
+		
+      Scanner sc=new Scanner(System.in);
+      SwitchCase sw=new SwitchCase();
+      System.out.println("enter 1-createAccount");
+      System.out.println("enter 2-login");
+      System.out.println("enter 3-transfer");
+      System.out.println("enter 4-withdraw");
+      System.out.println("enter 5-checkBalance");
+      int n=sc.nextInt();
+      switch(n) {
+      case 1:
+    	  sw.createAccount();
+    	  break;
+      case 2:
+    	  sw.login();
+    	  break;
+      case 3:
+    	  sw.transfer();
+    	  break;
+      case 4:
+    	  sw.withdraw();
+    	  break;
+    	  
+      case 5:
+    	  sw.checkBalance();
+    	  
+    	  
+      }
+      
+      
+	}
+ 
+}
+ 
