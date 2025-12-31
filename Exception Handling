@@ -1,0 +1,61 @@
+import java.util.Scanner;
+ 
+class InvalidCredentialsException extends Exception{
+	public InvalidCredentialsException(String msg) {
+		super(msg);
+	}
+}
+class UserValidator{
+	public static void validate(String username,String password)throws InvalidCredentialsException {
+		{
+		if(username==null||username.length()<5) {
+			throw new InvalidCredentialsException("username must contain atleast 5 letters");
+		}
+		if(password.length()<8) {
+			throw new InvalidCredentialsException("password must contain atleast 8 letters");
+		}
+		if(!password.matches(".*[A-Z].*")) {
+			throw new InvalidCredentialsException("password must contain atleast one uppercase");
+		}
+		if(!password.matches(".*[a-z].*")) {
+			throw new InvalidCredentialsException("password must contain atleast one lcase");
+		}
+		if(!password.matches(".*[0-9].*")) {
+			throw new InvalidCredentialsException("password must contain atleast one num");
+		}
+		if(!password.matches(".*[@#$%!&].*")) {
+			throw new InvalidCredentialsException("password must contain atleast one special case");
+		}
+	}
+}
+}
+ 
+public class Validation {
+ 
+	public static void main(String[] args) {
+	
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter username");
+		String username=sc.nextLine();
+		System.out.println("enter password");
+		String password=sc.nextLine();
+		try {
+			UserValidator.validate(username, password);
+			System.out.println("valid data");
+		}
+		catch(InvalidCredentialsException e){
+			System.out.println("invalid exceptions");
+			
+		}
+		finally {
+			sc.close();
+		}
+				
+ 
+ 
+	}
+ 
+}
+ 
+ 
