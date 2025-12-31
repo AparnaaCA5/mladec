@@ -1,0 +1,48 @@
+import java.time.LocalDateTime;
+
+public class SingletonWithTimestamp {
+ 
+    
+    private static SingletonWithTimestamp instance;
+ 
+  
+    private final LocalDateTime createdAt;
+    private LocalDateTime lastAccessedAt;
+ 
+    
+    private SingletonWithTimestamp() {
+        createdAt = LocalDateTime.now();
+        lastAccessedAt = createdAt;
+    }
+ 
+    
+    public static SingletonWithTimestamp getInstance() {
+        if (instance == null) {
+            instance = new SingletonWithTimestamp();
+        }
+        instance.lastAccessedAt = LocalDateTime.now();
+        return instance;
+    }
+ 
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+ 
+    public LocalDateTime getLastAccessedAt() {
+        return lastAccessedAt;
+    }
+ 
+    
+    public static void main(String[] args) throws InterruptedException {
+        SingletonWithTimestamp s1 = SingletonWithTimestamp.getInstance();
+        System.out.println("Created At: " + s1.getCreatedAt());
+        System.out.println("Last Accessed At: " + s1.getLastAccessedAt());
+ 
+        Thread.sleep(2000);
+        SingletonWithTimestamp s2 = SingletonWithTimestamp.getInstance();
+        System.out.println("Same instance? " + (s1 == s2));
+        System.out.println("Updated Last Accessed At: " + s2.getLastAccessedAt());
+    }
+}
+ 
