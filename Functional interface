@@ -1,0 +1,12 @@
+interface Greet {
+    void  sayHello(String name);
+}
+public class GreetingDemo {
+   public static void main(String[] args) {
+	   Greet g=n->
+	   System.out.println("Hello "+n);
+	   g.sayHello("Freind");
+   }
+}
+ 
+ 
