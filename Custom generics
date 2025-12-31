@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+ 
+public class GenericDemo {
+ 
+    
+    static class Box<T> {
+        private final List<T> items = new ArrayList<>();
+ 
+        public void add(T item) {
+            items.add(item);
+        }
+ 
+        public List<T> getAll() {
+            return Collections.unmodifiableList(items);
+        }
+    }
+ 
+    
+    static class Customer {
+        private final int id;
+        private final String name;
+        private final String email;
+ 
+        public Customer(int id, String name, String email) {
+            this.id = id;
+            this.name = name;
+            this.email = email;
+        }
+ 
+        public int getId()     { return id; }
+        public String getName() { return name; }
+        public String getEmail() { return email; }
+ 
+        @Override
+        public String toString() {
+            return "Customer{id=" + id + ", name='" + name + "', email='" + email + "'}";
+        }
+    }
+ 
+    
+    public static void printCustomersStartsEnds(
+            Box<?> box,
+            Function<Customer, String> selector,
+            String startsWith,
+            String endsWith,
+            boolean ignoreCase
+    ) {
+        for (Object obj : box.getAll()) {
+            if (obj instanceof Customer c) {
+                String value = selector.apply(c);
+                if (value == null) continue;
+ 
+                String v = ignoreCase ? value.toLowerCase() : value;
+                String s = (startsWith == null ? "" : startsWith);
+                String e = (endsWith == null ? "" : endsWith);
+ 
+                if (ignoreCase) {
+                    s = s.toLowerCase();
+                    e = e.toLowerCase();
+                }
+ 
+                boolean startsOk = s.isEmpty() || v.startsWith(s);
+                boolean endsOk   = e.isEmpty() || v.endsWith(e);
+ 
+                if (startsOk && endsOk) {
+                    System.out.println(c);
+                }
+            }
+        }
+    }
+ 
+    public static void main(String[] args) {
+        Box<Object> mixedBox = new Box<>();
+        mixedBox.add(new Customer(1, "Ana", "Ana@gmail.com"));
+        mixedBox.add(new Customer(2, "Reena", "reena@gmail.com"));
+        mixedBox.add(new Customer(3, "Jerry", "jerry3@gmail.com"));
+        mixedBox.add("Just a string (non-customer)"); 
+ 
+        System.out.println("Customers by NAME (starts 'A', ends 'a'):");
+        printCustomersStartsEnds(mixedBox, Customer::getName, "A", "a", true);
+ 
+        System.out.println("\nCustomers by EMAIL (starts 'a', ends '.com'):");
+        printCustomersStartsEnds(mixedBox, Customer::getEmail, "a", ".com", true);
+ 
+        System.out.println("\nCustomers by NAME (no prefix/suffix — prints all):");
+        printCustomersStartsEnds(mixedBox, Customer::getName, "", "", false);
+    }
+}
+ 
+ 
